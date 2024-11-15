@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 // Spring에서 기본적으로 주어지는 SecurityConfig가 아닌
@@ -13,8 +14,13 @@ import org.springframework.security.web.SecurityFilterChain;
 // 스프링 시큐리티에게 관리 받기위한 Anotation
 @EnableWebSecurity
 public class SecurityConfig {
-
-	@Bean
+	
+	@Bean // 스프링 컨테이너에 빈으로 등록
+	public BCryptPasswordEncoder bCryptPasswordEncoder () {
+		return new BCryptPasswordEncoder(); 
+	}
+	
+	@Bean // 스프링 컨테이너에 빈으로 등록
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 			
 		http.authorizeHttpRequests((auth) -> auth // authorizeHttpRequests(): 특정 경로에 대한 접근 권한 부여
